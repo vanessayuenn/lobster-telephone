@@ -5,10 +5,7 @@ export default class RoomPrompt extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      selected: '',
-      username: '',
-      roomId: '',
-      magnetLink: '',
+      action: '',
     }
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleInputChange = this.handleInputChange.bind(this)
@@ -16,20 +13,17 @@ export default class RoomPrompt extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault()
-    console.log(event.target)
-    return false
+    this.props.onJoinRoom()
   }
 
   handleInputChange(event) {
-    this.setState({ [event.target.name]: event.target.value })
+    this.props.onInputChange(event.target.name, event.target.value)
   }
 
   select(action) {
-    this.setState({
-      selected: action,
-      roomId: '',
-      magnetLink: '',
-    })
+    this.setState({ action })
+    this.props.onInputChange('magnetURI', '')
+    this.props.onInputChange('roomId', '')
   }
 
   render() {
@@ -55,15 +49,15 @@ export default class RoomPrompt extends React.Component {
             name="username"
             className="border p1"
             placeholder="Your Name"
-            value={this.state.username}
+            value={this.props.username}
             onChange={this.handleInputChange}
           />
           <input
             type="text"
-            name={this.state.selected === 'new room' ? 'magnetLink' : 'roomId'}
+            name={this.state.action === 'new room' ? 'magnetURI' : 'roomId'}
             className="border p1 my1"
-            value={this.state.selected === 'new room' ? this.state.magnetLink : this.state.roomId}
-            placeholder={this.state.selected === 'new room' ? 'Magnet Link' : 'Room ID'}
+            value={this.state.action === 'new room' ? this.props.magnetURI : this.props.roomId}
+            placeholder={this.state.action === 'new room' ? 'Magnet Link' : 'Room ID'}
             onChange={this.handleInputChange}
           />
           <a
@@ -72,7 +66,7 @@ export default class RoomPrompt extends React.Component {
             onClick={this.handleSubmit}
           >
             <i className="material-icons mr1">arrow_forward</i>
-            {this.state.selected === 'new room' ? 'Make New Room' : 'Join Room'}
+            {this.state.action === 'new room' ? 'Make New Room' : 'Join Room'}
           </a>
           <input type="submit" value="Submit" hidden />
         </form>
