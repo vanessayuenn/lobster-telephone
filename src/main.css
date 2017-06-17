@@ -1,0 +1,21 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto+Mono:300');
+
+body, input, textarea, keygen, select, button {
+  background-color: #f3f0e6;
+  border-color: #354574;
+  color: #354574;
+  font-family: 'Roboto Mono', monospace;
+  font-size: 12px;
+}
+
+a {
+  color: #354574;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.vh100 {
+  height: 100vh;
+}
