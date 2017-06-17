@@ -16,6 +16,7 @@ server.listen(port, () => {
 io.on('connection', (socket) => {
   socket.on('new user', ({ name, roomId }) => {
     socket.name = name
+    console.log('param', name, roomId)
     if (roomId && !socket.roomId) {
       socket.roomId = roomId
     } else {
