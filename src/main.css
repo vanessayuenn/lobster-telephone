@@ -1,11 +1,26 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto+Mono:300');
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+@import url('https://unpkg.com/basscss@8.0.2/css/basscss.min.css');
 
-body, input, textarea, keygen, select, button {
+body {
   background-color: #f3f0e6;
-  border-color: #354574;
   color: #354574;
   font-family: 'Roboto Mono', monospace;
   font-size: 12px;
+}
+
+input, textarea, keygen, select, button {
+  border-color: #354574;
+  color: #354574;
+  background: none
+}
+
+.light {
+  color: #f3f0e6;
+}
+
+.dark {
+  color: #354574;
 }
 
 a {
@@ -18,4 +33,26 @@ a {
 
 .vh100 {
   height: 100vh;
+}
+
+.vw100 {
+  width: 100vw;
+}
+
+.ctrl-bar {
+  height: 3rem;
+  background-color: rgba(0,0,0,0.5);
+  color: white;
+}
+
+.absolute.top {
+  top: 0;
+}
+
+.absolute.bottom {
+  bottom: 0;
+}
+
+.overlay {
+  z-index: 1000;
 }

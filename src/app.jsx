@@ -1,6 +1,7 @@
 import React from 'react'
+import Controller from './controller'
 import RoomPrompt from './room-prompt'
-import controller from './controller'
+import VideoPlayer from './video-player'
 
 export default class App extends React.Component {
 
@@ -11,9 +12,12 @@ export default class App extends React.Component {
       username: '',
       magnetURI: '',
       roomId: '',
+      isPlaying: false,
     }
+    this.ctrl = new Controller()
     this.handleInputChange = this.handleInputChange.bind(this)
     this.handleJoinRoom = this.handleJoinRoom.bind(this)
+    this.handlePlayToggle = this.handlePlayToggle.bind(this)
   }
 
   handleInputChange(key, value) {
@@ -21,8 +25,15 @@ export default class App extends React.Component {
   }
 
   handleJoinRoom() {
-    controller.joinRoom(this.state.username, this.state.roomId)
+    this.ctrl.socketJoinRoom(this.state.username, this.state.roomId)
     this.setState({ route: 'videoPlayer' })
+  }
+
+  handlePlayToggle() {
+    this.setState({ isPlaying: !this.state.isPlaying }, (wat) => {
+      console.warn('play toggle: ', wat)
+      this.ctrl.videoPlayPause(this.state.isPlaying ? 'play' : 'pause')
+    })
   }
 
   resolveRoute() {
@@ -34,6 +45,15 @@ export default class App extends React.Component {
           roomId={this.state.roomId}
           onInputChange={this.handleInputChange}
           onJoinRoom={this.handleJoinRoom}
+        />
+      ),
+      videoPlayer: (
+        <VideoPlayer
+          username={this.state.username}
+          magnetURI={this.state.magnetURI}
+          roomId={this.state.roomId}
+          isPlaying={this.state.isPlaying}
+          onPlayToggle={this.handlePlayToggle}
         />
       ),
       error: (
