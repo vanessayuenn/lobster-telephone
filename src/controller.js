@@ -1,5 +1,6 @@
 import SocketClient from 'socket.io-client'
 import WebTorrent from 'webtorrent'
+import { ipcRenderer } from 'electron'
 
 const socketURI = 'http://localhost:1337'
 
@@ -26,8 +27,12 @@ export default class Controller {
         if (err) {
           console.error(`rendering error: ${err}`)
         }
-        console.log('video rendered!')
         this.videoElem = elem
+        console.log('video rendered!', elem.height, elem.width)
+        ipcRenderer.send(
+          'videoRendered',
+          { videoWidth: elem.videoWidth, videoHeight: elem.videoHeight }
+        )
       })
     })
   }

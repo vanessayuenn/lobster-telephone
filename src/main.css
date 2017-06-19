@@ -15,6 +15,10 @@ input, textarea, keygen, select, button {
   background: none
 }
 
+.bg-black {
+  background-color: black;
+}
+
 .light {
   color: #f3f0e6;
 }

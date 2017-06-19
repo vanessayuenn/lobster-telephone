@@ -15,8 +15,8 @@ export default class VideoPlayer extends React.Component {
   render() {
     return (
       <div className="relative">
-        <div className="absolute top vw100 vh100">
-          <video id="player"/>
+        <div className="absolute top vw100 vh100 flex items-center bg-black">
+          <video id="player" className="col-12"/>
         </div>
         <PlayerOverlay
           isPlaying={this.props.isPlaying}
