@@ -1,6 +1,6 @@
 {
-    "name": "meditative-rose",
-    "productName": "meditative-rose",
+    "name": "lobster-telephone",
+    "productName": "lobster-telephone",
     "version": "1.0.0",
     "description": "My Electron application description",
     "main": "src/index.js",
