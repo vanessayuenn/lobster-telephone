@@ -4,15 +4,34 @@
 
 body {
   background-color: #f3f0e6;
-  color: #354574;
+  background: linear-gradient(to bottom, #9ee5e5 0%,#e5c7d5 35%,#948cdb 100%);
   font-family: 'Roboto Mono', monospace;
   font-size: 12px;
 }
 
-input, textarea, keygen, select, button {
-  border-color: #354574;
-  color: #354574;
+button {
+  color: #fff7e0;
   background: none
+}
+
+.button {
+  background-color: none;
+}
+
+input, textarea, keygen, select {
+  background: rgba(255, 247, 224, 0.5);
+  border: none;
+  font-family: 'Roboto Mono', monospace;
+  letter-spacing: 0.1rem;
+  color: #5c5569;
+}
+
+.border {
+  border-width: 0.3rem;
+}
+
+.border.light {
+  border-color: #fff7e0;
 }
 
 .bg-black {
@@ -20,7 +39,7 @@ input, textarea, keygen, select, button {
 }
 
 .light {
-  color: #f3f0e6;
+  color: #fff7e0;
 }
 
 .dark {
@@ -28,7 +47,7 @@ input, textarea, keygen, select, button {
 }
 
 a {
-  color: #354574;
+  color: #fff7e0;
 }
 
 .pointer {

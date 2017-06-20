@@ -28,26 +28,26 @@ export default class RoomPrompt extends React.Component {
 
   render() {
     return (
-      <div className="flex flex-column">
+      <div className="flex flex-column mt2">
         <div className="flex">
           <button
-            className="p3 mr3 border pointer"
+            className="p3 mr3 border light pointer"
             onClick={() => this.select('new room')}
           >
             <i className="material-icons">add_to_queue</i>
           </button>
           <button
-            className="p3 border pointer"
+            className="p3 border light pointer"
             onClick={() => this.select('join room')}
           >
             <i className="material-icons">exit_to_app</i>
           </button>
         </div>
-        <form onSubmit={this.handleSubmit} className="flex flex-column my3 items-stretch">
+        <form onSubmit={this.handleSubmit} className="flex flex-column mt3 items-stretch">
           <input
             type="text"
             name="username"
-            className="border p1"
+            className="p2 my1"
             placeholder="Your Name"
             value={this.props.username}
             onChange={this.handleInputChange}
@@ -55,7 +55,7 @@ export default class RoomPrompt extends React.Component {
           <input
             type="text"
             name={this.state.action === 'new room' ? 'magnetURI' : 'roomId'}
-            className="border p1 my1"
+            className="p2 my1"
             value={this.state.action === 'new room' ? this.props.magnetURI : this.props.roomId}
             placeholder={this.state.action === 'new room' ? 'Magnet Link' : 'Room ID'}
             onChange={this.handleInputChange}
