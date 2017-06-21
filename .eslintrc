@@ -10,5 +10,8 @@
     "no-param-reassign": ["error", { "props": false }],
     "no-console": ["warn", { allow: ["error"] }],
     "react/prop-types": [1]
+  },
+  "env": {
+      "mocha": true
   }
 }
