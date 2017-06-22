@@ -2,6 +2,8 @@ const express = require('express')
 // const path = require('path')
 const http = require('http')
 const socketio = require('socket.io')
+const sqlite3 = require('sqlite3').verbose()
+const shortid = require('shortid')
 
 const port = process.env.PORT || 1337
 const app = express()
@@ -9,28 +11,78 @@ const server = http.createServer(app)
 const io = socketio(server)
 
 server.listen(port, () => {
-  console.log('Server listening at port %d', port)
+  console.log('Server started. Listening at port %d', port)
 })
 
+const db = new sqlite3.Database('lobster.db', () => {
+  db.run('CREATE TABLE if not exists rooms (roomId TEXT, magnetURI TEXT, userNum INTEGER)')
+})
+
+const getRoomData = (roomId) => {
+  const roomData = new Promise((resolve, reject) => {
+    db.get('SELECT * FROM rooms where roomId = ?', roomId,
+      (err, row) => {
+        if (!err && row) {
+          resolve(row)
+        } else {
+          console.trace("error here!")
+          reject(err || 'no result')
+        }
+      })
+  })
+  return roomData
+}
+
+const newRoom = (magnetURI) => {
+  const newRoomId = shortid.generate()
+  db.run('INSERT INTO rooms VALUES (?, ?, 1)', [newRoomId, magnetURI], () => {
+    db.all('SELECT * FROM rooms', (err, rows) => console.log(rows))
+  })
+  return newRoomId
+}
+
+const updateRoomUserNum = async (roomId, userNumDelta) => {
+  const roomData = await getRoomData(roomId)
+  roomData.userNum += userNumDelta
+  if (roomData.userNum > 0) {
+    db.run('UPDATE rooms SET userNum = ? WHERE roomId = ?', [roomData.userNum, roomData.roomId])
+  } else {
+    db.run('DELETE FROM rooms WHERE roomId = ?', roomData.roomId)
+  }
+  return roomData
+}
+
+const joinRoom = roomId => updateRoomUserNum(roomId, 1)
+const leaveRoom = roomId => updateRoomUserNum(roomId, -1)
 
 io.on('connection', (socket) => {
   console.log('socket connected')
-  socket.on('new user', ({ name, roomId }) => {
+
+  socket.on('new user', async ({ name, roomId, magnetURI }) => {
+    console.log('param', name, roomId, magnetURI)
     socket.name = name
-    console.log('param', name, roomId)
-    if (roomId && !socket.roomId) {
-      socket.roomId = roomId
-    } else {
-      // TODO: generate roomId
-      socket.roomId = 'room1'
+    try {
+      if (roomId) {
+        const roomData = await joinRoom(roomId)
+        console.log('joined room: ', roomData)
+        socket.roomId = roomId
+        socket.magnetURI = roomData.magnetURI
+      } else if (magnetURI) {
+        socket.roomId = newRoom(magnetURI)
+        socket.magnetURI = magnetURI
+      } else {
+        throw new Error('need one of either roomId or magnetURI.')
+      }
+    } catch (e) {
+      console.error(e)
     }
+
     socket.join(socket.roomId, () => {
-      console.log(`${socket.name}'s' socket is in room: ${socket.roomId}`)
+      console.log('new socket: ', socket.name, socket.roomId, socket.magnetURI)
       socket.to(socket.roomId).emit('new user', { name: socket.name })
-      const mockMagnetURI = 'magnet:?xt=urn:btih:08ada5a7a6183aae1e09d831df6748d566095a10&dn=Sintel&tr=udp%3A%2F%2Fexplodie.org%3A6969&tr=udp%3A%2F%2Ftracker.coppersurfer.tk%3A6969&tr=udp%3A%2F%2Ftracker.empire-js.us%3A1337&tr=udp%3A%2F%2Ftracker.leechers-paradise.org%3A6969&tr=udp%3A%2F%2Ftracker.opentrackr.org%3A1337&tr=wss%3A%2F%2Ftracker.btorrent.xyz&tr=wss%3A%2F%2Ftracker.fastcast.nz&tr=wss%3A%2F%2Ftracker.openwebtorrent.com&ws=https%3A%2F%2Fwebtorrent.io%2Ftorrents%2F&xs=https%3A%2F%2Fwebtorrent.io%2Ftorrents%2Fsintel.torrent'
       socket.emit('join room', {
         roomId: socket.roomId,
-        magnetURI: mockMagnetURI,
+        magnetURI: socket.magnetURI,
       })
     })
   })
@@ -43,5 +95,10 @@ io.on('connection', (socket) => {
     io.in(socket.roomId).emit('pause', {
       name: socket.name,
     })
+  })
+
+  socket.on('disconnect', () => {
+    console.log('socket is disconnected: ', socket.name, socket.roomId)
+    leaveRoom(socket.roomId)
   })
 })

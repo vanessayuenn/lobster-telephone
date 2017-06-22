@@ -21,14 +21,13 @@ export default class Controller {
   videoRender(videoId, magnetURI) {
     this.wtClient.add(magnetURI, (torrent) => {
       // Got torrent me tadata!
-      console.log('Client is downloading:', torrent.infoHash)
+      console.log('Client is downloading:', torrent.infoHash, torrent.files)
       const videoFile = torrent.files.find(file => this.isVideo(file.name))
       videoFile.renderTo(`video#${videoId}`, { autoplay: false }, (err, elem) => {
         if (err) {
           console.error(`rendering error: ${err}`)
         }
         this.videoElem = elem
-        console.log('video rendered!', elem.height, elem.width)
         ipcRenderer.send(
           'videoRendered',
           { videoWidth: elem.videoWidth, videoHeight: elem.videoHeight }
@@ -46,9 +45,9 @@ export default class Controller {
   }
 
 
-  socketJoinRoom(name, roomId) {
+  socketJoinRoom(name, roomId, magnetURI) {
     console.log('socketJoinRoom')
-    this.socket.emit('new user', { name, roomId })
+    this.socket.emit('new user', { name, roomId, magnetURI })
   }
 
   socketOnJoinRoom(payload) {

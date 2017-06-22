@@ -25,7 +25,7 @@ export default class App extends React.Component {
   }
 
   handleJoinRoom() {
-    this.ctrl.socketJoinRoom(this.state.username, this.state.roomId)
+    this.ctrl.socketJoinRoom(this.state.username, this.state.roomId, this.state.magnetURI)
     this.setState({ route: 'videoPlayer' })
   }
 
