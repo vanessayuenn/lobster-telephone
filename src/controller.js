@@ -46,7 +46,7 @@ export default class Controller {
 
 
   socketJoinRoom(name, roomId, magnetURI) {
-    console.log('socketJoinRoom')
+    console.log('socketJoinRoom', name, roomId, magnetURI)
     this.socket.emit('new user', { name, roomId, magnetURI })
   }
 
@@ -83,9 +83,9 @@ export default class Controller {
     const ext = this.getExtension(filename)
     switch (ext.toLowerCase()) {
       case 'm4v':
-      case 'avi':
-      case 'mpg':
       case 'mp4':
+      // case 'mpg':
+      // case 'mkv':
         return true
       default:
         return false
