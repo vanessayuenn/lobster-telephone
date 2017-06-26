@@ -15,15 +15,11 @@ server.listen(port, () => {
 })
 
 io.on('connection', (socket) => {
-  console.log('socket connected')
-
   socket.on('new user', async ({ name, roomId, magnetURI }) => {
-    console.log('param', name, roomId, magnetURI)
     socket.name = name
     try {
       if (roomId) {
         const roomData = await db.joinRoom(roomId)
-        console.log('joined room: ', roomData)
         socket.roomId = roomId
         socket.magnetURI = roomData.magnetURI
       } else if (magnetURI) {
