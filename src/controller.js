@@ -8,14 +8,14 @@ const socketURI = 'http://localhost:1337'
 export default class Controller {
 
   constructor() {
-    this.socket = new SocketClient(socketURI)
+    // this.socket = new SocketClient(socketURI)
     this.wtClient = new WebTorrent()
     this.magnetURI = ''
     this.videoElem = null
 
-    this.socket.on('play', this.socketOnPlay.bind(this))
-    this.socket.on('pause', this.socketOnPause.bind(this))
-    this.socket.on('join room', this.socketOnJoinRoom.bind(this))
+    // this.socket.on('play', this.socketOnPlay.bind(this))
+    // this.socket.on('pause', this.socketOnPause.bind(this))
+    // this.socket.on('join room', this.socketOnJoinRoom.bind(this))
   }
 
   videoRender(videoId, magnetURI) {
