@@ -49,6 +49,7 @@
   },
   "dependencies": {
     "electron-compile": "^6.4.1",
+    "electron-default-menu": "^1.0.1",
     "electron-devtools-installer": "^2.2.0",
     "eslint": "^3.19.0",
     "eslint-config-airbnb": "^15.0.1",

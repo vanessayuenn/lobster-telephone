@@ -1,6 +1,7 @@
-import { app, BrowserWindow, ipcMain } from 'electron'
+import { app, BrowserWindow, ipcMain, Menu, shell } from 'electron'
 import installExtension, { REACT_DEVELOPER_TOOLS } from 'electron-devtools-installer'
 import { enableLiveReload } from 'electron-compile'
+import defaultMenu from 'electron-default-menu'
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -34,6 +35,7 @@ const createWindow = async () => {
     // when you should delete the corresponding element.
     mainWindow = null
   })
+  Menu.setApplicationMenu(Menu.buildFromTemplate(defaultMenu(app, shell)))
 }
 
 // This method will be called when Electron has finished

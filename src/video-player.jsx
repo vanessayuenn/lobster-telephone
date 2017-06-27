@@ -23,9 +23,14 @@ export default class VideoPlayer extends React.Component {
         if (err) {
           console.error(`rendering error: ${err}`)
         }
+        let [h, w] = [elem.videoHeight, elem.videoWidth]
+        if (w > 1200) {
+          h = Math.round((900 / w) * h)
+          w = 900
+        }
         ipcRenderer.send(
           'videoRendered',
-          { videoWidth: elem.videoWidth, videoHeight: elem.videoHeight }
+          { videoWidth: w, videoHeight: h }
         )
       })
     })
@@ -58,6 +63,7 @@ export default class VideoPlayer extends React.Component {
         </div>
         <PlayerOverlay
           isPlaying={this.props.isPlaying}
+          roomId={this.props.roomId}
           onPlayToggle={this.onPlayToggle}
         />
       </div>

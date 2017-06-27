@@ -19,7 +19,8 @@ export default class App extends React.Component {
     this.handleJoinRoom = this.handleJoinRoom.bind(this)
     this.handlePlayToggle = this.handlePlayToggle.bind(this)
 
-    this.socket = new SocketClient('http://localhost:1337')
+    this.socket = new SocketClient('https://lobster-telephone.herokuapp.com/')
+    // this.socket = new SocketClient('http://localhost:1337')
     this.socket.on('play', this.socketOnPlay.bind(this))
     this.socket.on('pause', this.socketOnPause.bind(this))
     this.socket.on('join room', this.socketOnJoinRoom.bind(this))
@@ -37,7 +38,6 @@ export default class App extends React.Component {
         route: 'videoPlayer',
       })
     }
-    // TODO: handle roomId display
   }
 
   socketOnPlay(payload) {
