@@ -8,12 +8,13 @@ newIssueWelcomeComment: |
 # Configuration for new-pr-welcome - https://github.com/behaviorbot/new-pr-welcome
 
 # Comment to be posted to on PRs from first time contributors in your repository
-newPRWelcomeComment: "Thanks for opening this pull request! Here is a list of things that will help get it across the finish line:
+newPRWelcomeComment: |
+  Thanks for opening this pull request! Here is a list of things that will help get it across the finish line:
   - Follow the JavaScript, C++, and Python [coding style](https://github.com/electron/electron/blob/master/docs/development/coding-style.md).
   - Run `npm run lint` locally to catch formatting errors earlier.
   - Document any user-facing changes you've made following the [documentation styleguide](https://github.com/electron/electron/blob/master/docs/styleguide.md).
   - Include tests when adding/changing behavior.
-  - Include screenshots and animated GIFs whenever possible."
+  - Include screenshots and animated GIFs whenever possible.
 
 # Configuration for first-pr-merge - https://github.com/behaviorbot/first-pr-merge
 
