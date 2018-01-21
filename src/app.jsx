@@ -4,8 +4,7 @@ import RoomPrompt from './room-prompt'
 import VideoPlayer from './video-player'
 
 export default class App extends React.Component {
-
-  constructor(props) {
+  constructor (props) {
     super(props)
     this.state = {
       route: 'roomPrompt',
@@ -13,7 +12,7 @@ export default class App extends React.Component {
       magnetURI: '',
       roomId: '',
       isPlaying: false,
-      startAt: 0,
+      startAt: 0
     }
     this.handleInputChange = this.handleInputChange.bind(this)
     this.handleJoinRoom = this.handleJoinRoom.bind(this)
@@ -26,44 +25,44 @@ export default class App extends React.Component {
     this.socket.on('join room', this.socketOnJoinRoom.bind(this))
   }
 
-  socketOnJoinRoom(payload) {
+  socketOnJoinRoom (payload) {
     if (!this.state.magnetURI) {
       this.setState({
         magnetURI: payload.magnetURI,
-        route: 'videoPlayer',
+        route: 'videoPlayer'
       })
     } else if (!this.state.roomId) {
       this.setState({
         roomId: payload.roomId,
-        route: 'videoPlayer',
+        route: 'videoPlayer'
       })
     }
   }
 
-  socketOnPlay(payload) {
+  socketOnPlay (payload) {
     console.log('got play event: ', payload)
     this.setState({ isPlaying: true, startAt: payload.time })
   }
 
-  socketOnPause(payload) {
+  socketOnPause (payload) {
     console.log('got pause event: ', payload)
     // this.videoElem.pause()
     this.setState({ isPlaying: false })
   }
 
-  handleInputChange(key, value) {
+  handleInputChange (key, value) {
     this.setState({ [key]: value })
   }
 
-  handleJoinRoom() {
+  handleJoinRoom () {
     this.socket.emit('new user', {
       name: this.state.username,
       roomId: this.state.roomId,
-      magnetURI: this.state.magnetURI,
+      magnetURI: this.state.magnetURI
     })
   }
 
-  handlePlayToggle(time) {
+  handlePlayToggle (time) {
     if (this.state.isPlaying === false) {
       this.socket.emit('play', { time })
     } else {
@@ -71,7 +70,7 @@ export default class App extends React.Component {
     }
   }
 
-  resolveRoute() {
+  resolveRoute () {
     const routeActions = {
       roomPrompt: (
         <RoomPrompt
@@ -94,14 +93,14 @@ export default class App extends React.Component {
       ),
       error: (
         <div>Ooooooppsie</div>
-      ),
+      )
     }
     return routeActions[this.state.route] || routeActions.error
   }
 
-  render() {
+  render () {
     return (
-      <div className="flex items-center justify-center">
+      <div className='flex items-center justify-center'>
         {this.resolveRoute()}
       </div>
     )

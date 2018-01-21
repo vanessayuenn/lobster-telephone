@@ -2,14 +2,13 @@ const sqlite3 = require('sqlite3').verbose()
 const shortid = require('shortid')
 
 module.exports = class DbManager {
-
-  constructor() {
+  constructor () {
     this.db = new sqlite3.Database('lobster.db', () => {
       this.db.run('CREATE TABLE if not exists rooms (roomId TEXT, magnetURI TEXT, userNum INTEGER)')
     })
   }
 
-  getRoomData(roomId) {
+  getRoomData (roomId) {
     const roomData = new Promise((resolve, reject) => {
       this.db.get('SELECT * FROM rooms where roomId = ?', roomId,
         (err, row) => {
@@ -23,13 +22,13 @@ module.exports = class DbManager {
     return roomData
   }
 
-  newRoom(magnetURI) {
+  newRoom (magnetURI) {
     const newRoomId = shortid.generate()
     this.db.run('INSERT INTO rooms VALUES (?, ?, 1)', [newRoomId, magnetURI])
     return newRoomId
   }
 
-  async updateRoomUserNum(roomId, userNumDelta) {
+  async updateRoomUserNum (roomId, userNumDelta) {
     const roomData = await this.getRoomData(roomId)
     console.log('roomData', roomData)
     roomData.userNum += userNumDelta
@@ -41,13 +40,12 @@ module.exports = class DbManager {
     return roomData
   }
 
-  joinRoom(roomId) {
+  joinRoom (roomId) {
     return this.updateRoomUserNum(roomId, 1)
   }
 
-  leaveRoom(roomId) {
+  leaveRoom (roomId) {
     console.log('leave room')
     return this.updateRoomUserNum(roomId, -1)
   }
-
 }

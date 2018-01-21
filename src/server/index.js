@@ -37,7 +37,7 @@ io.on('connection', (socket) => {
       socket.to(socket.roomId).emit('new user', { name: socket.name })
       socket.emit('join room', {
         roomId: socket.roomId,
-        magnetURI: socket.magnetURI,
+        magnetURI: socket.magnetURI
       })
     })
   })
@@ -48,7 +48,7 @@ io.on('connection', (socket) => {
 
   socket.on('pause', () => {
     io.in(socket.roomId).emit('pause', {
-      name: socket.name,
+      name: socket.name
     })
   })
 

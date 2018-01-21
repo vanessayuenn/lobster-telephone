@@ -16,7 +16,7 @@ const createWindow = async () => {
   mainWindow = new BrowserWindow({
     width: 720,
     height: 480,
-    titleBarStyle: 'hiddenInset',
+    titleBarStyle: 'hiddenInset'
   })
 
   // and load the index.html of the app.
