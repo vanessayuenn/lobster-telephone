@@ -1,0 +1,40 @@
+@import url('https://fonts.googleapis.com/css?family=Overpass+Mono:300,400&display=swap');
+@import url('https://unpkg.com/basscss@8.0.2/css/basscss.min.css');
+
+body {
+  background: #141214;
+  font-family: 'Overpass Mono', monospace;
+  font-size: 12px;
+  height: 100vh;
+}
+
+button {
+  font-family: 'Overpass Mono', monospace;
+}
+
+input, textarea, keygen, select {
+  border: none;
+  font-family: 'Overpass Mono', monospace;
+  /* letter-spacing: 0.1rem; */
+  color: #5c5569;
+}
+
+.bg-black {
+  background-color: #4c1830;
+}
+
+.light {
+  color: #fff7e0;
+}
+
+.dark {
+  color: #354574;
+}
+
+a {
+  color: #fff7e0;
+}
+
+.pointer {
+  cursor: pointer;
+}
