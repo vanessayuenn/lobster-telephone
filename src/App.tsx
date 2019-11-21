@@ -25,7 +25,7 @@ const App: React.FC = () => {
   const [startAt, setStartAt] = useState(0)
   const [route, setRoute] = useState('roomPrompt')
   const socket: SocketIOClient.Socket = io(
-    "https://lobster-telephone.herokuapp.com/"
+    "http://lobster.linoman.net/"
   )
 
   const handleJoinRoom = () => {
