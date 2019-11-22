@@ -5,8 +5,10 @@
   "dependencies": {
     "@types/jest": "24.0.23",
     "@types/node": "12.12.8",
+    "@types/react": "^16.9.11",
     "@types/react-dom": "16.9.4",
     "@types/socket.io-client": "^1.4.32",
+    "eslint-config-standard": "^14.1.0",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-player": "^1.14.1",
@@ -21,7 +23,7 @@
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
-    "extends": "react-app"
+    "extends": "standard"
   },
   "browserslist": {
     "production": [
