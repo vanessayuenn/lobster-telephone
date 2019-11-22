@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import RoomPrompt from './RoomPrompt'
-import io from "socket.io-client"
-import "./App.css"
+import io from 'socket.io-client'
+import './App.css'
 import VideoPlayer from './VideoPlayer'
 
 interface RouteActions {
@@ -36,44 +36,35 @@ const App: React.FC = () => {
     })
   }
 
-  const handlePlayToggle = (time: number) => {
-    if (!isPlaying) {
-      socket.emit("play", { time });
-      // REMOVE
-      setIsPlaying(true);
+  const handlePlayToggle = (shouldPlay: boolean, time: number) => {
+    if (shouldPlay) {
+      socket.emit('play', { time })
     } else {
-      socket.emit("pause");
-      // REMOVE
-      setIsPlaying(false);
+      socket.emit('pause')
     }
+    console.log('should play:', shouldPlay)
   }
 
-  const socketOnJoinRoom = (payload: SocketPayload) => {
+  socket.on('join room', (payload: SocketPayload) => {
     if (!videoURI) {
       setVideoURI(payload.magnetURI)
     } else if (!roomId) {
       setRoomId(payload.roomId)
     }
     setRoute('videoPlayer')
-    console.log('we have a live socket!!', socket, payload)
-  }
+    console.log('we have a live socket!!', payload)
+  })
 
-  socket.on('join room', socketOnJoinRoom)
+  socket.on('play', (payload: SocketPayload) => {
+    console.log('got play event: ', payload)
+    setStartAt(payload.time)
+    setIsPlaying(true)
+  })
 
-  // useEffect(() => {
-  //   socket.on('play', (payload: SocketPayload) => {
-  //     console.log('got play event: ', payload)
-  //     setIsPlaying(true)
-  //     setStartAt(payload.time)
-  //   })
-  // })
-
-  // useEffect(() => {
-  //   socket.on('pause', (payload: SocketPayload) => {
-  //     console.log('got pause event: ', payload)
-  //     setIsPlaying(false)
-  //   })
-  // })
+  socket.on('pause', (payload: SocketPayload) => {
+    console.log('got pause event: ', payload)
+    setIsPlaying(false)
+  })
 
   const resolveRoute = (route: string) => {
     switch(route) {
