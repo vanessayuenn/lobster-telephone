@@ -38,3 +38,7 @@ a {
 .pointer {
   cursor: pointer;
 }
+
+.overlay {
+  height: 100%;
+}
