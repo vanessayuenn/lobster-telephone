@@ -48,7 +48,7 @@
     }
   },
   "dependencies": {
-    "electron": "^1.8.2-beta.3",
+    "electron": "^7.2.4",
     "electron-compile": "^6.4.2",
     "electron-default-menu": "^1.0.1",
     "electron-devtools-installer": "^2.2.3",
