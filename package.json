@@ -68,7 +68,7 @@
     "chai": "^4.0.2",
     "chai-as-promised": "^7.0.0",
     "electron-prebuilt-compile": "1.6.11",
-    "mocha": "^3.4.2",
+    "mocha": "^10.2.0",
     "spectron": "~3.6.4"
   },
   "babel": {
